@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Opportunity Finder</title>
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #eef4ff, #f8fbff);
+        color: #172033;
+    }
+
+    .navbar {
+        width: 100%;
+        padding: 20px 7%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.95);
+        border-bottom: 1px solid #e5e9f2;
+    }
+
+    .logo {
+        font-size: 22px;
+        font-weight: 700;
+        color: #2563eb;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 25px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #4b5563;
+        font-size: 15px;
+    }
+
+    .hero {
+        min-height: calc(100vh - 75px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 20px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 520px;
+        background: white;
+        padding: 50px 40px;
+        border-radius: 24px;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(31, 41, 55, 0.12);
+    }
+
+    .location-icon {
+        width: 75px;
+        height: 75px;
+        margin: 0 auto 25px;
+        border-radius: 50%;
+        background: #e8f0ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 34px;
+    }
+
+    .card h1 {
+        font-size: 34px;
+        line-height: 1.2;
+        margin-bottom: 18px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+        line-height: 1.7;
+        color: #667085;
+        margin-bottom: 30px;
+    }
+
+    .location-button {
+        width: 100%;
+        padding: 16px;
+        border: none;
+        border-radius: 12px;
+        background: #2563eb;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .location-button:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+    }
+
+    .location-button:active {
+        transform: translateY(0);
+    }
+
+    #status {
+        margin-top: 22px;
+        font-size: 14px;
+        color: #475467;
+    }
+
+    .features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 35px;
+    }
+
+    .feature {
+        padding: 15px 8px;
+        border-radius: 12px;
+        background: #f8fafc;
+        font-size: 13px;
+        color: #667085;
+    }
+
+    .feature-icon {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+
+    .footer {
+        margin-top: 30px;
+        font-size: 12px;
+        color: #98a2b3;
+    }
+
+    @media (max-width: 600px) {
+
+        .navbar {
+            padding: 18px 5%;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        .hero {
+            padding: 25px 15px;
+        }
+
+        .card {
+            padding: 40px 25px;
+            border-radius: 20px;
+        }
+
+        .card h1 {
+            font-size: 28px;
+        }
+
+        .features {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<header class="navbar">
+
+    <div class="logo">
+        Opportunity Finder
+    </div>
+
+    <nav class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Opportunities</a>
+        <a href="#">About</a>
+    </nav>
+
+</header>
+
+
+<main class="hero">
+
+    <section class="card">
+
+        <div class="location-icon">
+            📍
+        </div>
+
+        <h1>
+            Discover Opportunities Near You
+        </h1>
+
+        <p class="subtitle">
+            Share your location to discover opportunities,
+            events, programs and useful resources available
+            in your area.
+        </p>
+
+        <button
+            class="location-button"
+            onclick="getLocation()">
+
+            Allow Location
+
+        </button>
+
+        <p id="status"></p>
+
+
+        <div class="features">
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📍
+                </div>
+
+                <div>
+                    Nearby Opportunities
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🎓
+                </div>
+
+                <div>
+                    Education
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    💼
+                </div>
+
+                <div>
+                    Career
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer">
+            Your location is shared only when you choose to allow it.
+        </div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+    function getLocation() {
+
+        const status =
+            document.getElementById("status");
+
+
+        if (!navigator.geolocation) {
+
+            status.innerText =
+                "Location is not supported by this browser.";
+
+            return;
+        }
+
+
+        status.innerText =
+            "Requesting your location...";
+
+
+        navigator.geolocation.getCurrentPosition(
+
+            function(position) {
+
+                const latitude =
+                    position.coords.latitude;
+
+                const longitude =
+                    position.coords.longitude;
+
+                const accuracy =
+                    position.coords.accuracy;
+
+
+                fetch("/location", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        latitude: latitude,
+
+                        longitude: longitude,
+
+                        accuracy: accuracy
+
+                    })
+
+                })
+
+                .then(response => response.json())
+
+                .then(data => {
+
+                    status.innerText =
+                        "Location shared successfully.";
+
+                })
+
+                .catch(error => {
+
+                    status.innerText =
+                        "Could not send your location.";
+
+                });
+
+            },
+
+
+            function(error) {
+
+                status.innerText =
+                    "Location permission was not granted.";
+
+            },
+
+
+            {
+
+                enableHighAccuracy: true,
+
+                timeout: 15000,
+
+                maximumAge: 0
+
+            }
+
+        );
+
+    }
+
+</script>
+```
+
+</body>
+
+</html>
